@@ -1,6 +1,6 @@
 const express = require("express")
 const app = express()
-const { Categories } = require("../models/index")
+const Categories = require("../models")
 
 app.post("/", async (req, res) => {
   try {

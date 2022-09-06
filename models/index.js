@@ -1,5 +1,7 @@
 const { Sequelize } = require("sequelize")
+require("dotenv").config()
 const { DBNAME, DBUSER, HOSTNAME, PASSWORD } = process.env
+
 
 const sequelize = new Sequelize(DBNAME, DBUSER, PASSWORD, {
   host: HOSTNAME,
@@ -18,15 +20,15 @@ const connectDb = async () => {
 
 connectDb()
 
-const Categories = require("./Categories")(sequelize)
-const Produits = require("./Produits")(sequelize)
+const Categories = require("./categories")(sequelize)
+
+// const Produits = require("./produits")(sequelize)
 
 sequelize.sync({ alter: true })
 
 const db = {
   sequelize,
   Categories,
-  Produits,
-}
+};
 
-module.exports = db
+module.exports = db;
