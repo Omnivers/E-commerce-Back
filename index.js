@@ -13,8 +13,8 @@ app.use(cors())
 app.use(morgan("tiny"))
 
 app.use("/categories", categoryRoute)
-// app.use("/cart", panier)
 // app.use("/produits", produits)
+// app.use("/cart", panier)
 
 app.listen(process.env.port, () => {
   console.log(`Server running on ${process.env.port}`)
