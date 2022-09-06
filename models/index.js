@@ -1,10 +1,8 @@
 const { Sequelize } = require("sequelize")
-require("dotenv").config()
-const { DBNAME, DBUSER, HOSTNAME, PASSWORD } = process.env
+const { DB_NAME, DB_USERNAME, DB_HOSTNAME, DB_PASSWORD } = process.env
 
-
-const sequelize = new Sequelize(DBNAME, DBUSER, PASSWORD, {
-  host: HOSTNAME,
+const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+  host: DB_HOSTNAME,
   dialect: "mysql",
   logging: false,
 })
@@ -12,7 +10,7 @@ const sequelize = new Sequelize(DBNAME, DBUSER, PASSWORD, {
 const connectDb = async () => {
   try {
     await sequelize.authenticate()
-    console.log(`Connected to DB ${DBNAME}`)
+    console.log(`Connected to DB ${sequelize.config.database}`)
   } catch (e) {
     console.log(e)
   }
@@ -22,13 +20,9 @@ connectDb()
 
 const Categories = require("./categories")(sequelize)
 
-// const Produits = require("./produits")(sequelize)
-
 sequelize.sync({ alter: true })
 
-const db = {
+module.exports = {
   sequelize,
   Categories,
-};
-
-module.exports = db;
+}
