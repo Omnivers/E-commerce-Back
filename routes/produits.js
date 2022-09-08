@@ -13,18 +13,24 @@ app.post("/", async (req, res) => {
   }
 })
 
+
 app.get("/", async (req, res) => {
   try {
-    const produits = await Produits.findAll({
-      attributes: ["id", "title", "image"],
-    })
+    let priceOrder = req.query.price
+    let order = {}
 
-    res.json(produits)
+    if (priceOrder) {
+      order = {
+        order: [["price", priceOrder]],
+      }
+    }
+    const products = await Product.findAll(order)
+    res.status(201).json(products)
   } catch (e) {
-    console.log(e)
-    res.status(500).json("Internal server error")
+    res.status(500).json("Internal sever error")
   }
 })
+
 
 app.get("/:id", async (req, res) => {
   const { id } = req.params
@@ -80,3 +86,5 @@ app.put("/:id", async (req, res) => {
 })
 
 module.exports = app
+
+
